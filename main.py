@@ -10,6 +10,9 @@ from langchain.chat_models import ChatOpenAI
 if not os.getenv("OPENAI_API_KEY"):
     os.environ["OPENAI_API_KEY"] = "your-openai-api-key"
 
+
+
+
 # Process the documents
 processed_documents = chunk_pdfs()
 # Initialize the OpenAI Embedding Model
