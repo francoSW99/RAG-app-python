@@ -21,9 +21,10 @@ The app will automatically open in your browser at `http://localhost:8501`
 ### ⚙️ Interactive Configuration
 - **API Key Input**: Enter your Groq API key directly in the sidebar
 - **Model Selection**: Choose between different Groq models
-  - `llama-3.3-70b-versatile` (Recommended)
-  - `mixtral-8x7b-32768`
-  - `gemma2-9b-it`
+  - `llama-3.3-70b-versatile` (Recommended - Latest and best)
+  - `llama-3.1-70b-versatile` (Excellent quality)
+  - `llama-3.1-8b-instant` (Fastest)
+  - `gemma2-9b-it` (Compact)
 - **Source Count**: Adjust how many document chunks to retrieve (1-10)
 - **Temperature**: Control response creativity (0.0 = focused, 1.0 = creative)
 

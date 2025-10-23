@@ -236,15 +236,16 @@ docs = db.similarity_search_with_score(query, k=5)  # Consulta 5 chunks
 Modifica en `main.py` (línea 32):
 ```python
 model = ChatGroq(
-    model="mixtral-8x7b-32768",  # Otros: gemma2-9b-it, llama-3.3-70b-versatile
+    model="llama-3.1-70b-versatile",  # Otros: llama-3.1-8b-instant, gemma2-9b-it
     temperature=0,
 )
 ```
 
 Modelos disponibles en Groq (todos gratuitos):
-- `llama-3.3-70b-versatile` - Recomendado, mejor calidad
-- `mixtral-8x7b-32768` - Ventana de contexto grande
-- `gemma2-9b-it` - Más rápido, menor tamaño
+- `llama-3.3-70b-versatile` - **Recomendado**, mejor calidad y más reciente
+- `llama-3.1-70b-versatile` - Excelente calidad, muy confiable
+- `llama-3.1-8b-instant` - Más rápido, ideal para prototipos
+- `gemma2-9b-it` - Compacto y eficiente
 
 ### Cambiar tamaño de chunks
 
