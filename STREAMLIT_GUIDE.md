@@ -1,171 +1,171 @@
-# 🌐 Streamlit Web Interface Guide
+# 🌐 Guía de la Interfaz Web con Streamlit
 
-## Quick Start
+## Inicio Rápido
 
-### Run the Web App
+### Ejecutar la Aplicación Web
 
 ```bash
 streamlit run app.py
 ```
 
-The app will automatically open in your browser at `http://localhost:8501`
+La aplicación se abrirá automáticamente en tu navegador en `http://localhost:8501`
 
-## Features
+## Características
 
-### 🎨 Modern Web Interface
-- Clean, responsive design
-- Dark/Light mode support
-- Real-time chat interface
-- Expandable source citations
+### 🎨 Interfaz Web Moderna
+- Diseño limpio y minimalista en tonos grises
+- Soporte para modo claro/oscuro
+- Interfaz de chat en tiempo real
+- Citación de fuentes expandibles
 
-### ⚙️ Interactive Configuration
-- **API Key Input**: Enter your Groq API key directly in the sidebar
-- **Model Selection**: Choose between different Groq models
-  - `llama-3.3-70b-versatile` (Recommended - Latest and best)
-  - `llama-3.1-70b-versatile` (Excellent quality)
-  - `llama-3.1-8b-instant` (Fastest)
-  - `gemma2-9b-it` (Compact)
-- **Source Count**: Adjust how many document chunks to retrieve (1-10)
-- **Temperature**: Control response creativity (0.0 = focused, 1.0 = creative)
+### ⚙️ Configuración Interactiva
+- **Entrada de API Key**: Ingresa tu API key de Groq directamente en el sidebar
+- **Selección de Modelo**: Elige entre diferentes modelos de Groq
+  - `llama-3.3-70b-versatile` (Recomendado - El más reciente y mejor)
+  - `llama-3.1-70b-versatile` (Excelente calidad)
+  - `llama-3.1-8b-instant` (El más rápido)
+  - `gemma2-9b-it` (Compacto)
+- **Número de Fuentes**: Ajusta cuántos fragmentos de documentos recuperar (1-10)
+- **Temperatura**: Controla la creatividad de las respuestas (0.0 = enfocado, 1.0 = creativo)
 
-### 💬 Chat Features
-- **Persistent History**: Chat history maintained during session
-- **Source Display**: Each response shows sources with:
-  - Document name
-  - Page number
-  - Relevance percentage
-- **Clear History**: Button to reset conversation
+### 💬 Funciones del Chat
+- **Historial Persistente**: El historial de chat se mantiene durante la sesión
+- **Visualización de Fuentes**: Cada respuesta muestra las fuentes con:
+  - Nombre del documento
+  - Número de página
+  - Porcentaje de relevancia
+- **Limpiar Historial**: Botón para resetear la conversación
 
-## Step-by-Step Usage
+## Uso Paso a Paso
 
-### 1. Prepare Your Documents
+### 1. Prepara tus Documentos
 ```bash
-# Place your PDF files in the documents folder
-cp your-files/*.pdf documents/
+# Coloca tus archivos PDF en la carpeta documents
+cp tus-archivos/*.pdf documents/
 ```
 
-### 2. Start the App
+### 2. Inicia la Aplicación
 ```bash
 streamlit run app.py
 ```
 
-### 3. Configure in Sidebar
-1. Enter your Groq API key (get it from [console.groq.com](https://console.groq.com/))
-2. Choose your preferred model
-3. Adjust settings (optional)
+### 3. Configura en el Sidebar
+1. Ingresa tu API key de Groq (obtén una gratis en [console.groq.com](https://console.groq.com/))
+2. Elige tu modelo preferido
+3. Ajusta la configuración (opcional)
 
-### 4. Initialize System
-Click the "🚀 Initialize RAG System" button
+### 4. Inicializa el Sistema
+Haz clic en el botón "🚀 Initialize RAG System"
 
-Wait for:
-- ✅ Document processing
-- ✅ Embedding model loading
-- ✅ ChromaDB creation
-- ✅ LLM initialization
+Espera a que:
+- ✅ Se procesen los documentos
+- ✅ Se cargue el modelo de embeddings
+- ✅ Se cree la base de datos ChromaDB
+- ✅ Se inicialice el LLM
 
-### 5. Start Chatting!
-Type your questions in the chat input at the bottom
+### 5. ¡Comienza a Chatear!
+Escribe tus preguntas en el input de chat en la parte inferior
 
-## Example Questions
+## Ejemplos de Preguntas
 
-### For Academic Papers
-- "Summarize the methodology section"
-- "What are the main findings of this research?"
-- "Compare the results with previous studies"
+### Para Papers Académicos
+- "Resume la sección de metodología"
+- "¿Cuáles son los principales hallazgos de esta investigación?"
+- "Compara los resultados con estudios previos"
 
-### For Books
-- "What are the main themes discussed in chapter 3?"
-- "Summarize the author's argument about [topic]"
-- "What examples does the author provide for [concept]?"
+### Para Libros
+- "¿Cuáles son los temas principales discutidos en el capítulo 3?"
+- "Resume el argumento del autor sobre [tema]"
+- "¿Qué ejemplos proporciona el autor para [concepto]?"
 
-### For Technical Documentation
-- "How do I configure [feature]?"
-- "What are the system requirements?"
-- "Explain the architecture diagram"
+### Para Documentación Técnica
+- "¿Cómo configuro [funcionalidad]?"
+- "¿Cuáles son los requisitos del sistema?"
+- "Explica el diagrama de arquitectura"
 
-## Tips for Best Results
+## Consejos para Mejores Resultados
 
-### 📝 Writing Good Questions
-- Be specific and clear
-- Reference specific topics or concepts
-- Ask one thing at a time
+### 📝 Escribir Buenas Preguntas
+- Sé específico y claro
+- Referencia temas o conceptos específicos
+- Pregunta una cosa a la vez
 
-### 🎯 Optimizing Retrieval
-- Increase source count (k) for complex questions
-- Use lower temperature (0.0-0.3) for factual answers
-- Use higher temperature (0.5-0.8) for creative responses
+### 🎯 Optimizar la Recuperación
+- Aumenta el número de fuentes (k) para preguntas complejas
+- Usa temperatura baja (0.0-0.3) para respuestas factuales
+- Usa temperatura alta (0.5-0.8) para respuestas creativas
 
-### 🔧 Troubleshooting
+### 🔧 Solución de Problemas
 
-#### "System not initialized" Error
-- Make sure you clicked "Initialize RAG System"
-- Check that documents/ folder contains PDF files
-- Verify API key is correct
+#### Error "System not initialized"
+- Asegúrate de hacer clic en "Initialize RAG System"
+- Verifica que la carpeta documents/ contenga archivos PDF
+- Confirma que la API key sea correcta
 
-#### Slow Response Times
-- Large PDFs take time to process initially
-- First query loads the embedding model (~90MB)
-- Subsequent queries are faster
+#### Tiempos de Respuesta Lentos
+- Los PDFs grandes tardan en procesarse inicialmente
+- La primera consulta carga el modelo de embeddings (~90MB)
+- Las consultas siguientes son más rápidas
 
-#### "No relevant information found"
-- Try rephrasing your question
-- Increase the number of sources
-- Ensure your question relates to document content
+#### "No se encontró información relevante"
+- Intenta reformular tu pregunta
+- Aumenta el número de fuentes
+- Asegúrate de que tu pregunta se relacione con el contenido del documento
 
-## Keyboard Shortcuts
+## Atajos de Teclado
 
-- `Ctrl + Enter`: Send message
-- `Ctrl + K`: Focus on chat input
-- `Ctrl + Shift + R`: Rerun app (refresh)
+- `Ctrl + Enter`: Enviar mensaje
+- `Ctrl + K`: Enfocar en el input de chat
+- `Ctrl + Shift + R`: Reejecutar app (refrescar)
 
-## Advanced Configuration
+## Configuración Avanzada
 
-### Custom Styling
-Edit the CSS in `app.py` lines 21-39:
+### Estilos Personalizados
+Edita el CSS en `app.py` líneas 23-80:
 
 ```python
 st.markdown("""
 <style>
-    /* Your custom styles here */
+    /* Tus estilos personalizados aquí */
 </style>
 """, unsafe_allow_html=True)
 ```
 
-### Change Default Settings
-Modify the default values in sidebar controls (lines 65-95)
+### Cambiar Configuración Predeterminada
+Modifica los valores por defecto en los controles del sidebar (líneas 74-103)
 
-### Add Custom Models
-Add to model selection dropdown (line 71):
+### Agregar Modelos Personalizados
+Añade al dropdown de selección de modelo (línea 76):
 
 ```python
 model_name = st.selectbox(
     "LLM Model",
-    ["llama-3.3-70b-versatile", "your-custom-model"],
+    ["llama-3.3-70b-versatile", "tu-modelo-personalizado"],
 )
 ```
 
-## Deployment
+## Despliegue
 
-### Deploy to Streamlit Cloud (Free)
+### Desplegar en Streamlit Cloud (Gratis)
 
-1. Push your code to GitHub
-2. Go to [share.streamlit.io](https://share.streamlit.io/)
-3. Connect your repository
-4. Add secrets:
+1. Sube tu código a GitHub
+2. Ve a [share.streamlit.io](https://share.streamlit.io/)
+3. Conecta tu repositorio
+4. Agrega secrets:
    ```toml
    # .streamlit/secrets.toml
-   GROQ_API_KEY = "your-api-key-here"
+   GROQ_API_KEY = "tu-api-key-aqui"
    ```
-5. Deploy!
+5. ¡Despliega!
 
-### Deploy to Other Platforms
+### Desplegar en Otras Plataformas
 
 #### Heroku
 ```bash
-# Add Procfile
+# Agrega Procfile
 echo "web: streamlit run app.py --server.port $PORT" > Procfile
 
-# Deploy
+# Despliega
 git push heroku main
 ```
 
@@ -180,57 +180,74 @@ EXPOSE 8501
 CMD ["streamlit", "run", "app.py"]
 ```
 
-## Performance Tips
+## Consejos de Rendimiento
 
-### Faster Loading
-- Use smaller embedding models for testing
-- Cache the ChromaDB database
-- Process documents offline
+### Carga Más Rápida
+- Usa modelos de embeddings más pequeños para pruebas
+- Cachea la base de datos ChromaDB
+- Procesa documentos offline
 
-### Memory Optimization
-- Limit chunk size in file_processor.py
-- Use CPU-only torch version for embeddings
-- Clear chat history periodically
+### Optimización de Memoria
+- Limita el tamaño de chunks en file_processor.py
+- Usa versión CPU-only de torch para embeddings
+- Limpia el historial de chat periódicamente
 
-## Security Notes
+## Notas de Seguridad
 
-⚠️ **Important for Deployment**:
-- Never commit `.env` file
-- Use Streamlit secrets for production
-- Implement rate limiting for public deployments
-- Add authentication if needed
+⚠️ **Importante para Despliegues**:
+- Nunca hagas commit del archivo `.env`
+- Usa secrets de Streamlit para producción
+- Implementa rate limiting para despliegues públicos
+- Agrega autenticación si es necesario
 
-## Comparison: CLI vs Web Interface
+## Comparación: CLI vs Interfaz Web
 
-| Feature | CLI (main.py) | Web (app.py) |
-|---------|---------------|--------------|
-| **Interface** | Terminal | Browser |
-| **Ease of Use** | Technical users | Everyone |
-| **History** | Session only | Persistent during session |
-| **Configuration** | Code/env vars | Interactive UI |
-| **Deployment** | Local only | Can deploy online |
-| **Sources** | Text format | Expandable boxes |
-| **Setup** | Faster | Slightly slower |
+| Característica | CLI (main.py) | Web (app.py) |
+|----------------|---------------|--------------|
+| **Interfaz** | Terminal | Navegador |
+| **Facilidad de Uso** | Usuarios técnicos | Cualquier persona |
+| **Historial** | Solo sesión | Persistente durante sesión |
+| **Configuración** | Código/vars entorno | UI Interactiva |
+| **Despliegue** | Solo local | Se puede desplegar online |
+| **Fuentes** | Formato texto | Cajas expandibles |
+| **Setup** | Más rápido | Ligeramente más lento |
 
-## FAQs
+## Preguntas Frecuentes
 
-### Can I use both CLI and Web interfaces?
-Yes! They both use the same backend. Run `python main.py` for CLI or `streamlit run app.py` for web.
+### ¿Puedo usar ambas interfaces CLI y Web?
+¡Sí! Ambas usan el mismo backend. Ejecuta `python main.py` para CLI o `streamlit run app.py` para web.
 
-### Will my documents be uploaded to the cloud?
-No! Everything runs locally. Only LLM calls go to Groq API.
+### ¿Mis documentos se suben a la nube?
+¡No! Todo se ejecuta localmente. Solo las llamadas al LLM van a la API de Groq.
 
-### Can I customize the look?
-Yes! Edit the CSS in the app.py file.
+### ¿Puedo personalizar el aspecto?
+¡Sí! Edita el CSS en el archivo app.py.
 
-### How do I update models?
-Just select a different model from the sidebar and re-initialize.
+### ¿Cómo actualizo los modelos?
+Simplemente selecciona un modelo diferente del sidebar y re-inicializa.
 
-## Support
+## Paleta de Colores
+
+### Esquema Minimalista en Grises
+- **Header**: Degradado gris oscuro (#4a5568 → #2d3748)
+- **Mensajes del usuario**: Gris claro (#e2e8f0)
+- **Mensajes del asistente**: Gris medio (#edf2f7)
+- **Cajas de fuentes**: Gris muy claro (#f7fafc)
+- **Texto principal**: Negro oscuro (#1a202c)
+- **Texto secundario**: Gris medio (#4a5568)
+- **Borde de fuentes**: Gris oscuro (#4a5568)
+
+### Filosofía de Diseño
+- Minimalista y profesional
+- Colores que combinan en tonos grises
+- Alto contraste para legibilidad
+- Consistencia visual en todos los elementos
+
+## Soporte
 
 - **Issues**: [GitHub Issues](https://github.com/francoSW99/RAG-app-python/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/francoSW99/RAG-app-python/discussions)
+- **Discusiones**: [GitHub Discussions](https://github.com/francoSW99/RAG-app-python/discussions)
 
 ---
 
-Made with ❤️ using Streamlit | Powered by Groq + HuggingFace
+Hecho con ❤️ usando Streamlit | Powered by Groq + HuggingFace
