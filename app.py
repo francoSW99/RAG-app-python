@@ -25,22 +25,48 @@ st.markdown("""
     .main-header {
         font-size: 2.5rem;
         font-weight: bold;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(90deg, #4a5568 0%, #2d3748 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
         padding: 1rem 0;
     }
     .source-box {
-        background-color: #f0f2f6;
+        background-color: #f7fafc;
         padding: 1rem;
         border-radius: 0.5rem;
-        border-left: 4px solid #667eea;
+        border-left: 4px solid #4a5568;
         margin: 0.5rem 0;
+        color: #2d3748;
     }
-    .stChatMessage {
-        background-color: #f8f9fa;
+    /* User messages - light gray background */
+    [data-testid="stChatMessageContent"][data-testid*="user"] {
+        background-color: #e2e8f0;
+        color: #1a202c;
         border-radius: 1rem;
+        padding: 1rem;
+    }
+    /* Assistant messages - darker gray background */
+    [data-testid="stChatMessageContent"]:not([data-testid*="user"]) {
+        background-color: #edf2f7;
+        color: #1a202c;
+        border-radius: 1rem;
+        padding: 1rem;
+    }
+    /* All chat message text should be dark */
+    .stChatMessage {
+        color: #1a202c !important;
+    }
+    /* Chat message content text color */
+    .stChatMessage p, .stChatMessage div {
+        color: #1a202c !important;
+    }
+    /* Subtitle text */
+    .subtitle {
+        text-align: center;
+        color: #4a5568;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -165,7 +191,7 @@ with st.sidebar:
 st.markdown("<h1 class='main-header'>🤖 RAG Chatbot - Free AI Assistant</h1>", unsafe_allow_html=True)
 
 st.markdown("""
-<div style='text-align: center; color: #666; margin-bottom: 2rem;'>
+<div class='subtitle'>
     Ask questions about your documents with AI-powered search | 100% Free using Groq + HuggingFace
 </div>
 """, unsafe_allow_html=True)
@@ -190,16 +216,20 @@ if not st.session_state.initialized:
         """)
 
 else:
-    # Display chat messages
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+    # Display chat messages only if there are any
+    if st.session_state.messages:
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
 
-            # Display sources if available
-            if "sources" in message and message["sources"]:
-                with st.expander("📚 Sources"):
-                    for source in message["sources"]:
-                        st.markdown(f"<div class='source-box'>{source}</div>", unsafe_allow_html=True)
+                # Display sources if available
+                if "sources" in message and message["sources"]:
+                    with st.expander("📚 Sources"):
+                        for source in message["sources"]:
+                            st.markdown(f"<div class='source-box'>{source}</div>", unsafe_allow_html=True)
+    else:
+        # Show welcome message when no messages yet
+        st.info("💬 Ready to chat! Ask a question about your documents to get started.")
 
     # Chat input
     if prompt := st.chat_input("Ask a question about your documents..."):
