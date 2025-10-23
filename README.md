@@ -1,17 +1,46 @@
-# RAG App - Retrieval-Augmented Generation with OpenAI
+# RAG App - Chatbot Inteligente 100% Gratuito 🤖
 
-Un sistema completo de **Retrieval-Augmented Generation (RAG)** que permite consultar documentos PDF utilizando inteligencia artificial. Este proyecto demuestra cómo integrar búsqueda semántica con modelos de lenguaje para generar respuestas contextualizadas basadas en documentos específicos.
+Un sistema completo de **Retrieval-Augmented Generation (RAG)** que permite consultar documentos PDF utilizando inteligencia artificial **completamente gratis**. Este proyecto utiliza **Groq** (LLM gratuito) y **HuggingFace** (embeddings locales gratuitos) para crear un asistente conversacional que responde preguntas basándose en tus documentos.
+
+## ✨ Características Principales
+
+- 🆓 **100% Gratuito** - Sin costos de API (Groq + HuggingFace)
+- 💬 **Chat Interactivo** - Haz múltiples preguntas en una sesión
+- 📄 **Citación de Fuentes** - Muestra páginas exactas y relevancia porcentual
+- 🔒 **Privacidad** - Embeddings locales, tus documentos no salen de tu PC
+- ⚡ **Rápido** - Groq ofrece una de las inferencias más rápidas del mercado
+- 🎯 **Preciso** - Respuestas basadas SOLO en tus documentos
+
+## 🆕 Novedades en esta Versión
+
+### Migración Completa a Stack Gratuito
+- ❌ **Eliminado**: OpenAI (embeddings + LLM de pago)
+- ✅ **Agregado**: Groq (LLM gratuito con llama-3.3-70b)
+- ✅ **Agregado**: HuggingFace (embeddings locales con all-MiniLM-L6-v2)
+
+### Chat Interactivo
+- Interfaz conversacional en terminal
+- Historial de preguntas en una sola sesión
+- Comandos de salida: `exit`, `quit`, `salir`, `q`
+
+### Transparencia de Fuentes
+```
+📚 Information retrieved from:
+  📄 Tu_Documento.pdf - Page 23 (85.2% relevance to your question)
+  📄 Tu_Documento.pdf - Page 45 (78.6% relevance to your question)
+  📄 Tu_Documento.pdf - Page 67 (72.3% relevance to your question)
+```
 
 ## ¿Qué es RAG?
 
 **Retrieval-Augmented Generation** es una técnica que mejora las respuestas de los modelos de lenguaje (LLMs) al combinar su conocimiento interno con información extraída de documentos externos. En lugar de depender únicamente del conocimiento con el que fue entrenado el modelo, RAG permite:
 
-- Acceder a información actualizada y específica de tu dominio
-- Generar respuestas basadas en documentos internos (políticas, manuales, reportes, etc.)
-- Reducir alucinaciones al fundamentar las respuestas en datos reales
-- Crear asistentes especializados sin necesidad de reentrenar modelos
+- ✅ Acceder a información actualizada y específica de tu dominio
+- ✅ Generar respuestas basadas en documentos internos (políticas, manuales, reportes, etc.)
+- ✅ Reducir alucinaciones al fundamentar las respuestas en datos reales
+- ✅ Crear asistentes especializados sin necesidad de reentrenar modelos
 
-## Arquitectura del Sistema
+## 🏗️ Arquitectura del Sistema
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -26,165 +55,48 @@ Un sistema completo de **Retrieval-Augmented Generation (RAG)** que permite cons
                                                            │
                                                            ▼
    ┌──────────────┐      ┌─────────────────┐      ┌──────────────┐
-   │ Base de datos│ <──  │   chroma_db     │ <──  │   OpenAI     │
+   │ Base de datos│ <──  │   chroma_db     │ <──  │ HuggingFace  │
    │  vectorial   │      │.save_to_chroma()│      │  Embeddings  │
-   │  (ChromaDB)  │      └─────────────────┘      └──────────────┘
-   └──────────────┘
+   │  (ChromaDB)  │      └─────────────────┘      │   (LOCAL)    │
+   └──────────────┘                                └──────────────┘
 
 2. CONSULTA Y GENERACIÓN (Runtime)
    ┌──────────────┐      ┌─────────────────┐      ┌──────────────┐
    │   Usuario    │ ──>  │    Búsqueda     │ ──>  │  Documentos  │
    │   pregunta   │      │   semántica     │      │  relevantes  │
-   │              │      │  (ChromaDB)     │      │  (top-k)     │
+   │              │      │  (ChromaDB)     │      │  + páginas   │
    └──────────────┘      └─────────────────┘      └──────────────┘
                                                            │
                                                            ▼
    ┌──────────────┐      ┌─────────────────┐      ┌──────────────┐
-   │   Respuesta  │ <──  │   ChatOpenAI    │ <──  │   Prompt     │
-   │    final     │      │    (GPT-3.5+)   │      │ + Contexto   │
+   │   Respuesta  │ <──  │   Groq LLM      │ <──  │   Prompt     │
+   │  + Fuentes   │      │  (llama-3.3)    │      │ + Contexto   │
    └──────────────┘      └─────────────────┘      └──────────────┘
 ```
 
-## Estructura del Proyecto
+## 📁 Estructura del Proyecto
 
 ```
 RAG-app-python/
-├── main.py                 # Punto de entrada principal
+├── main.py                 # Chat interactivo con RAG
+├── .env.example            # Template para configuración
+├── .env                    # Tu API key (NO se sube a GitHub)
 ├── src/
 │   ├── file_processor.py   # Procesamiento y chunking de PDFs
 │   └── chroma_db.py        # Gestión de la base de datos vectorial
-├── documents/              # Carpeta donde colocas tus PDFs (debe crearse)
+├── documents/              # 📁 Coloca tus PDFs aquí
 ├── chroma/                 # Base de datos vectorial (se genera automáticamente)
 ├── requirements.txt        # Dependencias del proyecto
 └── README.md              # Este archivo
 ```
 
-## Descripción de Archivos
-
-### `main.py`
-**Orquestador principal del sistema RAG**
-
-Este archivo coordina todo el flujo de trabajo:
-
-1. **Configuración inicial**: Establece la API key de OpenAI
-2. **Procesamiento**: Llama a `chunk_pdfs()` para convertir PDFs en fragmentos
-3. **Embedding**: Inicializa el modelo `text-embedding-3-large` de OpenAI
-4. **Almacenamiento**: Guarda los vectores en ChromaDB
-5. **Consulta**: Realiza búsqueda semántica con la pregunta del usuario
-6. **Generación**: Construye un prompt con el contexto y genera la respuesta
-
-**Ejemplo de uso en el código:**
-```python
-# Define tu pregunta
-query = "What are the recommended steps for fertilizing a vegetable garden?"
-
-# Busca los 3 documentos más relevantes
-docs = db.similarity_search_with_score(query, k=3)
-
-# Genera respuesta con ChatOpenAI
-model = ChatOpenAI()
-response = model.predict(prompt)
-```
-
-### `src/file_processor.py`
-**Módulo de procesamiento de documentos**
-
-**Responsabilidad**: Convertir PDFs en chunks (fragmentos) procesables.
-
-**¿Qué hace?**
-- Lee todos los PDFs de la carpeta `documents/`
-- Divide el texto en fragmentos de 800 caracteres
-- Mantiene un overlap de 100 caracteres entre chunks para preservar contexto
-- Añade índices de inicio para rastreabilidad
-
-**Parámetros importantes:**
-- `chunk_size=800`: Tamaño óptimo para búsqueda semántica
-- `chunk_overlap=100`: Evita perder información en los bordes
-- `RecursiveCharacterTextSplitter`: Divide respetando estructura del texto
-
-**¿Por qué es necesario?**
-Los modelos de embeddings tienen límites de tokens. Dividir documentos largos en chunks permite:
-- Búsquedas más precisas
-- Mejor rendimiento de embeddings
-- Respuestas más focalizadas
-
-### `src/chroma_db.py`
-**Módulo de gestión de base de datos vectorial**
-
-**Responsabilidad**: Almacenar y gestionar los embeddings en ChromaDB.
-
-**¿Qué hace?**
-- Elimina la base de datos anterior (si existe) para evitar duplicados
-- Crea embeddings para cada chunk usando OpenAI
-- Almacena los vectores en ChromaDB localmente
-- Provee interfaz para búsquedas de similitud
-
-**ChromaDB**: Base de datos vectorial open-source optimizada para:
-- Búsqueda por similitud coseno
-- Almacenamiento eficiente de embeddings
-- Consultas rápidas en grandes volúmenes de datos
-
-## Algoritmo RAG - Paso a Paso
-
-### Fase 1: Preparación (Offline)
-
-```python
-# 1. Cargar y procesar documentos
-processed_documents = chunk_pdfs()
-# Resultado: Lista de objetos Document con texto fragmentado
-
-# 2. Generar embeddings
-embedding_model = OpenAIEmbeddings(model="text-embedding-3-large")
-# Modelo de OpenAI que convierte texto en vectores de 3072 dimensiones
-
-# 3. Guardar en base de datos vectorial
-db = save_to_chroma_db(processed_documents, embedding_model)
-# ChromaDB almacena pares (texto, vector) para búsqueda rápida
-```
-
-### Fase 2: Consulta (Runtime)
-
-```python
-# 1. Buscar documentos relevantes
-query = "¿Cómo fertilizar un jardín?"
-docs = db.similarity_search_with_score(query, k=3)
-# Retorna los 3 chunks más similares semánticamente
-
-# 2. Construir contexto
-context = "\n\n---\n\n".join([doc.page_content for doc, _score in docs])
-# Une los chunks relevantes en un solo string
-
-# 3. Crear prompt estructurado
-prompt = f"""
-Contexto: {context}
-Pregunta: {query}
-Responde basándote SOLO en el contexto proporcionado.
-"""
-
-# 4. Generar respuesta
-model = ChatOpenAI()
-response = model.predict(prompt)
-# GPT genera respuesta fundamentada en los documentos
-```
-
-## Cómo Funciona la Búsqueda Semántica
-
-1. **Embedding de la pregunta**: La consulta se convierte en un vector numérico
-2. **Similitud coseno**: Se compara con todos los vectores almacenados en ChromaDB
-3. **Ranking**: Se ordenan los chunks por similitud (score)
-4. **Top-k retrieval**: Se seleccionan los k documentos más relevantes
-
-**Ventaja sobre búsqueda tradicional**: No busca palabras exactas, sino **significado**.
-- Pregunta: "¿Cómo nutrir plantas?"
-- Encuentra: "fertilización de jardines" (aunque no use las mismas palabras)
-
-## Instalación
+## 🚀 Instalación
 
 ### Prerrequisitos
 - Python 3.8 o superior
-- Cuenta de OpenAI con API key
+- Cuenta gratuita en Groq ([console.groq.com](https://console.groq.com/))
 
-### Pasos
+### Pasos de Instalación
 
 1. **Clonar el repositorio**
    ```bash
@@ -208,107 +120,233 @@ response = model.predict(prompt)
    pip install -r requirements.txt
    ```
 
-4. **Configurar API Key de OpenAI**
+4. **Configurar API Key de Groq (Gratis)**
 
-   Opción A: Variable de entorno
+   a. Obtén tu API key gratuita en: [https://console.groq.com/](https://console.groq.com/)
+
+   b. Copia el archivo de configuración:
    ```bash
    # Windows
-   set OPENAI_API_KEY=tu-api-key-aqui
+   copy .env.example .env
 
    # Linux/Mac
-   export OPENAI_API_KEY=tu-api-key-aqui
+   cp .env.example .env
    ```
 
-   Opción B: Modificar directamente en `main.py` (línea 11)
-   ```python
-   os.environ["OPENAI_API_KEY"] = "tu-api-key-aqui"
+   c. Edita `.env` y agrega tu API key:
+   ```
+   GROQ_API_KEY=gsk_tu_api_key_aqui
    ```
 
-5. **Agregar documentos PDF**
+5. **Agregar tus documentos PDF**
    ```bash
-   mkdir documents
-   # Copia tus archivos PDF en esta carpeta
+   # Copia tus archivos PDF a la carpeta documents/
    ```
 
-6. **Ejecutar el proyecto**
+6. **Ejecutar el chatbot**
    ```bash
    python main.py
    ```
 
-## Personalización
+## 💬 Ejemplo de Uso
 
-### Cambiar la pregunta
+```
+================================================================================
+RAG CHATBOT - Powered by Groq + HuggingFace (100% FREE)
+================================================================================
+Documents loaded: 45 chunks
+Type 'exit', 'quit', or 'salir' to end the conversation
+================================================================================
 
-Modifica la variable `query` en `main.py` (línea 25):
-```python
-query = "Tu pregunta aquí"
+Your question: ¿Cuáles son las técnicas principales del libro?
+
+Thinking...
+
+Answer:
+Basado en el contexto proporcionado, las técnicas principales incluyen:
+
+1. **La Ley de Pareto (80/20)**: Enfócate en el 20% de tareas que generan el
+   80% de resultados.
+
+2. **Método ABCDE**: Categoriza tareas por prioridad - A (críticas), B (importantes),
+   C (opcionales), D (delegar), E (eliminar).
+
+3. **Comer la Rana**: Realiza tu tarea más difícil primero cada mañana.
+
+Source: Administración del tiempo - Tracy Brayan.pdf
+
+📚 Information retrieved from:
+  📄 Administración del tiempo - Tracy Brayan.pdf - Page 23 (89.5% relevance to your question)
+  📄 Administración del tiempo - Tracy Brayan.pdf - Page 45 (82.1% relevance to your question)
+  📄 Administración del tiempo - Tracy Brayan.pdf - Page 67 (75.8% relevance to your question)
+
+================================================================================
+
+Your question: exit
+
+Goodbye! Thanks for using the RAG chatbot.
 ```
 
-### Ajustar número de documentos recuperados
+## ⚙️ Personalización
 
-Modifica el parámetro `k` en `main.py` (línea 28):
+### Cambiar el número de fuentes consultadas
+
+Modifica `k` en `main.py` (línea 79):
 ```python
-docs = db.similarity_search_with_score(query, k=5)  # Ahora recupera 5 documentos
+docs = db.similarity_search_with_score(query, k=5)  # Consulta 5 chunks
 ```
+
+### Cambiar el modelo de Groq
+
+Modifica en `main.py` (línea 32):
+```python
+model = ChatGroq(
+    model="mixtral-8x7b-32768",  # Otros: gemma2-9b-it, llama-3.3-70b-versatile
+    temperature=0,
+)
+```
+
+Modelos disponibles en Groq (todos gratuitos):
+- `llama-3.3-70b-versatile` - Recomendado, mejor calidad
+- `mixtral-8x7b-32768` - Ventana de contexto grande
+- `gemma2-9b-it` - Más rápido, menor tamaño
 
 ### Cambiar tamaño de chunks
 
-Edita `src/file_processor.py` (línea 14-16):
+Edita `src/file_processor.py` (líneas 14-16):
 ```python
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,    # Chunks más grandes
-    chunk_overlap=200,  # Mayor overlap para mejor contexto
+    chunk_size=1000,    # Chunks más grandes (más contexto)
+    chunk_overlap=200,  # Mayor overlap
     length_function=len,
     add_start_index=True,
 )
 ```
 
-### Usar un modelo diferente de OpenAI
+### Usar modelo de embeddings diferente
 
-Modifica `main.py` (línea 46):
+Modifica en `main.py` (línea 20):
 ```python
-model = ChatOpenAI(model="gpt-4")  # Usar GPT-4 para mejor calidad
+embedding_model = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",  # Mejor para español
+    model_kwargs={'device': 'cpu'},
+    encode_kwargs={'normalize_embeddings': True}
+)
 ```
 
-## Dependencias Principales
+## 🔧 Dependencias Principales
 
-- **langchain**: Framework para construir aplicaciones con LLMs
-- **langchain-openai**: Integración de OpenAI con LangChain
-- **langchain-community**: Loaders y utilidades comunitarias
-- **chromadb**: Base de datos vectorial para embeddings
-- **pypdf**: Lector de archivos PDF
+### Stack Gratuito
+- **groq** - API gratuita para LLM (llama-3.3-70b)
+- **langchain-groq** - Integración de Groq con LangChain
+- **sentence-transformers** - Embeddings locales gratuitos
+- **langchain-huggingface** - Integración de HuggingFace con LangChain
 
-## Limitaciones Actuales
+### Core
+- **langchain** - Framework para aplicaciones con LLMs
+- **chromadb** - Base de datos vectorial local
+- **pypdf** - Lector de archivos PDF
+- **python-dotenv** - Manejo seguro de variables de entorno
 
-- La base de datos se recrea cada vez que ejecutas el programa (no es persistente entre ejecuciones)
-- Solo soporta archivos PDF
-- Requiere conexión a internet (llamadas a API de OpenAI)
-- Costos asociados al uso de la API de OpenAI
+## 📊 Comparación con Versión Anterior
 
-## Mejoras Futuras
+| Característica | Versión Anterior (OpenAI) | Versión Actual (Groq + HF) |
+|----------------|---------------------------|----------------------------|
+| **Costo LLM** | $0.002 por 1K tokens | 🆓 **Gratis** |
+| **Costo Embeddings** | $0.13 por 1M tokens | 🆓 **Gratis** |
+| **Privacidad Embeddings** | Datos enviados a OpenAI | ✅ **100% Local** |
+| **Interfaz** | Un query y termina | ✅ **Chat Interactivo** |
+| **Fuentes** | No mostraba | ✅ **Páginas + %** |
+| **Velocidad** | Rápido | ⚡ **Muy rápido** |
+| **Internet** | Siempre requerido | Solo LLM (embeddings offline) |
 
+## 🔐 Seguridad
+
+- ✅ API keys en archivo `.env` (no se sube a GitHub)
+- ✅ `.env` incluido en `.gitignore`
+- ✅ Template `.env.example` para setup
+- ✅ Validación de API key al inicio
+- ✅ Mensajes de error claros si falta configuración
+
+## ❓ FAQ
+
+### ¿Es realmente gratis?
+Sí, Groq ofrece API gratuita con límites generosos. HuggingFace ejecuta localmente, sin costos.
+
+### ¿Qué tan rápido es Groq?
+Groq es uno de los LLMs más rápidos disponibles, ~10x más rápido que GPT-4 en muchos casos.
+
+### ¿Funciona offline?
+Los embeddings funcionan offline después de la primera descarga. El LLM (Groq) requiere internet.
+
+### ¿Puedo usar mis propios PDFs?
+Sí, solo colócalos en la carpeta `documents/` y ejecuta el programa.
+
+### ¿Qué idiomas soporta?
+El sistema soporta múltiples idiomas. Para mejor rendimiento en español, usa el embedding `paraphrase-multilingual-MiniLM-L12-v2`.
+
+### ¿Cuántos documentos puedo procesar?
+Depende de tu RAM. El modelo de embeddings es ligero (~90MB). Puedes procesar cientos de PDFs.
+
+## 🎯 Casos de Uso
+
+- 📚 **Asistente de estudio** - Pregunta sobre libros y apuntes
+- 🏢 **Documentación interna** - Consulta manuales de empresa
+- ⚖️ **Análisis legal** - Busca en contratos y regulaciones
+- 🔬 **Investigación** - Consulta papers académicos
+- 📖 **Análisis de libros** - Extrae insights de libros técnicos
+
+## 🚧 Limitaciones Conocidas
+
+- La base de datos ChromaDB se recrea en cada ejecución (fácil de hacer persistente)
+- Solo soporta archivos PDF (fácil agregar DOCX, TXT, etc.)
+- El LLM requiere conexión a internet
+- Límites de rate de Groq (generosos pero existen)
+
+## 🛣️ Roadmap
+
+- [ ] Interfaz web con Streamlit
 - [ ] Persistencia de ChromaDB entre ejecuciones
-- [ ] Soporte para múltiples formatos (DOCX, TXT, Markdown)
-- [ ] Interfaz web con Streamlit o Gradio
-- [ ] Sistema de caché para reducir llamadas a la API
-- [ ] Soporte para modelos locales (Llama, Mistral)
-- [ ] Evaluación de calidad de respuestas
+- [ ] Soporte para DOCX, TXT, Markdown
+- [ ] Sistema de caché para reducir llamadas a Groq
+- [ ] Modo multimodal (imágenes en PDFs)
+- [ ] Exportar conversaciones
+- [ ] Métricas de calidad de respuestas
 
-## Recursos Adicionales
+## 📚 Recursos
 
+- [Documentación de Groq](https://console.groq.com/docs)
 - [Documentación de LangChain](https://python.langchain.com/)
 - [ChromaDB Documentation](https://docs.trychroma.com/)
-- [OpenAI API Reference](https://platform.openai.com/docs/api-reference)
-- [Artículo original en Medium](https://cristianfdev.medium.com/how-to-make-a-rag-retrieval-augmented-generation-in-python-e23b1e4d3dee)
+- [HuggingFace Sentence Transformers](https://www.sbert.net/)
 
-## Licencia
+## 🤝 Contribuciones
 
-Este proyecto está bajo la licencia MIT.
+Las contribuciones son bienvenidas! Por favor:
 
-## Contribuciones
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
 
-Las contribuciones son bienvenidas. Por favor, abre un issue primero para discutir los cambios que te gustaría realizar.
+## 📝 Licencia
+
+Este proyecto está bajo la licencia MIT. Ver `LICENSE` para más detalles.
+
+## 👨‍💻 Autor
+
+Franco SW - [@francoSW99](https://github.com/francoSW99)
+
+## 🙏 Agradecimientos
+
+- Groq por proporcionar API gratuita de LLM
+- HuggingFace por modelos de embeddings gratuitos
+- LangChain por el excelente framework
+- ChromaDB por la base de datos vectorial
 
 ---
 
-**Nota**: Este proyecto es una implementación educativa de RAG. Para uso en producción, considera implementar manejo de errores robusto, logging, y medidas de seguridad adicionales.
+⭐ Si este proyecto te fue útil, considera darle una estrella en GitHub!
+
+**Nota**: Este es un proyecto educativo. Para uso en producción, considera implementar manejo de errores robusto, logging, monitoreo, y medidas de seguridad adicionales.
