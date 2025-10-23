@@ -68,6 +68,14 @@ st.markdown("""
         margin-bottom: 2rem;
         font-size: 1.1rem;
     }
+    /* Expander header (Sources) - white text */
+    .streamlit-expanderHeader {
+        color: white !important;
+    }
+    /* Expander header text */
+    .streamlit-expanderHeader p {
+        color: white !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
