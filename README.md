@@ -5,11 +5,13 @@ Un sistema completo de **Retrieval-Augmented Generation (RAG)** que permite cons
 ## ✨ Características Principales
 
 - 🆓 **100% Gratuito** - Sin costos de API (Groq + HuggingFace)
+- 🌐 **Interfaz Web Moderna** - App web con Streamlit (además de CLI)
 - 💬 **Chat Interactivo** - Haz múltiples preguntas en una sesión
 - 📄 **Citación de Fuentes** - Muestra páginas exactas y relevancia porcentual
 - 🔒 **Privacidad** - Embeddings locales, tus documentos no salen de tu PC
 - ⚡ **Rápido** - Groq ofrece una de las inferencias más rápidas del mercado
 - 🎯 **Preciso** - Respuestas basadas SOLO en tus documentos
+- ⚙️ **Configurable** - Ajusta modelo, temperatura y fuentes desde la interfaz
 
 ## 🆕 Novedades en esta Versión
 
@@ -144,12 +146,47 @@ RAG-app-python/
    ```
 
 6. **Ejecutar el chatbot**
+
+   **Opción A: Interfaz Web (Recomendado)**
+   ```bash
+   streamlit run app.py
+   ```
+   Se abrirá automáticamente en tu navegador en `http://localhost:8501`
+
+   **Opción B: Interfaz de Terminal**
    ```bash
    python main.py
    ```
 
-## 💬 Ejemplo de Uso
+## 💬 Interfaces Disponibles
 
+### 🌐 Interfaz Web (Streamlit) - **Recomendado**
+
+La forma más fácil e intuitiva de usar el chatbot:
+
+```bash
+streamlit run app.py
+```
+
+**Características de la interfaz web:**
+- 🎨 Diseño moderno y responsive
+- ⚙️ Configuración interactiva (modelo, temperatura, fuentes)
+- 💬 Chat con historial visual
+- 📊 Gráficos de relevancia expandibles
+- 🔄 Fácil reinicio y ajuste de parámetros
+- 📱 Funciona en cualquier dispositivo con navegador
+
+![Streamlit Interface](https://via.placeholder.com/800x400?text=Streamlit+RAG+Interface)
+
+### 💻 Interfaz de Terminal (CLI)
+
+Para usuarios que prefieren la línea de comandos:
+
+```bash
+python main.py
+```
+
+**Ejemplo de uso:**
 ```
 ================================================================================
 RAG CHATBOT - Powered by Groq + HuggingFace (100% FREE)
@@ -181,11 +218,9 @@ Source: Administración del tiempo - Tracy Brayan.pdf
   📄 Administración del tiempo - Tracy Brayan.pdf - Page 67 (75.8% relevance to your question)
 
 ================================================================================
-
-Your question: exit
-
-Goodbye! Thanks for using the RAG chatbot.
 ```
+
+📖 **[Ver guía completa de Streamlit](STREAMLIT_GUIDE.md)**
 
 ## ⚙️ Personalización
 
@@ -305,13 +340,15 @@ Depende de tu RAM. El modelo de embeddings es ligero (~90MB). Puedes procesar ci
 
 ## 🛣️ Roadmap
 
-- [ ] Interfaz web con Streamlit
+- [x] Interfaz web con Streamlit ✅
 - [ ] Persistencia de ChromaDB entre ejecuciones
 - [ ] Soporte para DOCX, TXT, Markdown
 - [ ] Sistema de caché para reducir llamadas a Groq
 - [ ] Modo multimodal (imágenes en PDFs)
 - [ ] Exportar conversaciones
 - [ ] Métricas de calidad de respuestas
+- [ ] Upload de PDFs desde la interfaz web
+- [ ] Autenticación para deployments públicos
 
 ## 📚 Recursos
 
